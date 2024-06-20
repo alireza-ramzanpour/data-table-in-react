@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import Modal from 'react-modal';
 import "../assets/css/style.css"
 
 
@@ -17,47 +16,35 @@ function DataTable(props) {
 
 
     const handleEditingData = () => {
-        const updatedItem = { ...editingData[0] }
-        props.editField.forEach((field, index) => {
-            updatedItem[field] = fieldRefs.current[index].value;
-        });
-
         const updatedData = data.map((item, i) => {
-            if (i == updatedItem.index) {
-                return updatedItem
+            if (i == editingData[0].index) {
+                const updatedItem = { ...item };
+
+                props.editField.forEach((field, index) => {
+                    updatedItem[field] = fieldRefs.current[index].type == 'checkbox' ? fieldRefs.current[index].checked ? 'Yes' : 'No' : fieldRefs.current[index].value;
+                });
+                return updatedItem;
             }
-            return item
+            return item;
         });
 
-        setData(updatedData)
-        closeModal()
+        setData(updatedData);
+        closeModal();
     };
 
 
     // Modal Codes
 
-    const [modalIsOpen, setIsOpen] = useState(false);
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
     const openModal = (rowData) => {
-        setEditingData([rowData]);
-        setIsOpen(true);
+        setEditingData([rowData])
+        setModalIsOpen(true)
     }
 
     const closeModal = () => {
-        setIsOpen(false)
+        setModalIsOpen(false)
     }
-
-    const customStyles = {
-        content: {
-            width: '300px',
-            height: '200px',
-            marginTop: '20vh',
-            marginRight: 'auto',
-            marginLeft: 'auto',
-            backgroundColor: '#e8e8e8',
-            boxShadow: '0 5px 30px rgba(70, 72, 77, 0.08)',
-        },
-    };
 
     // Modal Codes
 
@@ -96,39 +83,51 @@ function DataTable(props) {
                                     props.editButton &&
                                     <td>
                                         <input type="button" className="table-btn" value="edit" onClick={() => openModal({ ...d, index })} />
-                                        <Modal
-                                            isOpen={modalIsOpen}
-                                            onRequestClose={closeModal}
-                                            style={customStyles}
-                                        >
-                                            <div>Enter the field</div>
-
-                                            <form>
-                                                {
-                                                    props.editField.map((field, index) => (
-                                                        editingData.map((item) => (
-                                                            <input
-                                                                type="text"
-                                                                ref={(element) => fieldRefs.current[index] = element}
-                                                                className={field}
-                                                                defaultValue={item[field]}
-                                                            />
-                                                        ))
-                                                    ))
-                                                }
-                                                <div className="button-wrapper">
-                                                    <input type="button" className="custom-button ok-btn" value="Ok" onClick={handleEditingData} />
-                                                    <input type="button" className="custom-button cancel-btn" value="Cancel" onClick={closeModal} />
-                                                </div>
-                                            </form>
-                                        </Modal>
                                     </td>
                                 }
                             </tr>
+
                         ))
+
                     }
                 </tbody>
             </table>
+            {modalIsOpen &&
+                <div className='modal'>
+                    <h2>Enter the field</h2>
+                    <form>
+                        {props.editField.map((field, index) => (
+                            editingData.map((item) => {
+                                if (item[field] == "Yes" || item[field] == "No") {
+                                    return (
+                                        <div >
+                                            <input
+                                                type="checkbox"
+                                                ref={(element) => fieldRefs.current[index] = element}
+                                                defaultChecked={item[field] == 'Yes' ? true : false}
+                                            />
+                                            <span>{field}</span>
+                                        </div>
+                                    )
+                                } else {
+                                    return (
+                                        <input
+                                            type="text"
+                                            ref={(element) => fieldRefs.current[index] = element}
+                                            className={field}
+                                            defaultValue={item[field]}
+                                        />
+                                    )
+                                }
+                            })
+                        ))}
+                        <div className="button-wrapper">
+                            <input type="button" className="custom-button ok-btn" value="Ok" onClick={handleEditingData} />
+                            <input type="button" className="custom-button cancel-btn" value="Cancel" onClick={closeModal} />
+                        </div>
+                    </form>
+                </div>
+            }
 
         </>
     )

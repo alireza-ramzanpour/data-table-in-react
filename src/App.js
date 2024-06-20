@@ -7,16 +7,17 @@ function App() {
       <DataTable
         theme="blue"
         editButton = {true}
-        editField = {["name", "family"]}
+        editField = {["name", "family", "retired"]}
         deleteButton={true}
-        cols={["name", "family"]}
+        cols={["name", "family", "retired"]}
         data={[
-          { name: "ali", family: "rezaei" },
-          { name: "reza", family: "alinia" },
-          { name: "mehdi", family: "hoseini" },
-          { name: "amin", family: "amiri" },
-          { name: "mehran", family: "kazemi" },
-        ]} />
+          { name: "ali", family: "rezaei", retired: 'Yes' },
+          { name: "reza", family: "alinia", retired: 'No' },
+          { name: "mehdi", family: "hoseini", retired: 'Yes' },
+          { name: "amin", family: "amiri", retired: 'Yes' },
+          { name: "mehran", family: "kazemi", retired: 'No' },
+        ]} 
+        />
 
 
     </>
