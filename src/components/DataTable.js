@@ -15,8 +15,6 @@ function DataTable(props) {
     const startIndex = (currentPage - 1) * props.rowsPerPage;
     const endIndex = startIndex + props.rowsPerPage;
     const currentData = data.slice(startIndex, endIndex);
-    const showPreviousButton = currentPage > 1;
-    const showNextButton = currentPage < totalPages;
 
     const handlePageChange = (page) => {
         if (page > 0 && page <= totalPages) {
@@ -73,7 +71,7 @@ function DataTable(props) {
                                     <th className="tableHeader">{col}</th>
                                 ))
                             }
-                            <th className="tableHeader">peration</th>
+                            <th className="tableHeader">operation</th>
                             {/* {props.deleteButton && <th>peration</th>} */}
                             {/* {props.editButton && <th>peration</th>} */}
                         </tr>
@@ -106,15 +104,6 @@ function DataTable(props) {
                 </table>
                 <div className="tableFooter">
 
-                    {showPreviousButton && (
-                        <input
-                            type="button"
-                            className="button"
-                            onClick={() => handlePageChange(currentPage - 1)}
-                            value='Previous'
-                        />
-                    )}
-
                     {Array.from({ length: totalPages }, (_, index) => {
                         const pageNumber = index + 1;
                         if (
@@ -124,24 +113,21 @@ function DataTable(props) {
                         ) {
                             return (
                                 <button
-                                    key={index}
                                     className={`button ${pageNumber == currentPage ? 'activeButton' : 'inactiveButton'}`}
                                     onClick={() => handlePageChange(pageNumber)}
                                 >
                                     {pageNumber}
                                 </button>
-                            );
+                            )
+                        } else if (
+                            pageNumber == 2 ||
+                            pageNumber == totalPages - 1
+                        ) {
+                            return (
+                                <button className="button dotButton">...</button>
+                            )
                         }
                     })}
-
-                    {showNextButton && (
-                        <input
-                            type="button"
-                            className="button"
-                            onClick={() => handlePageChange(currentPage + 1)}
-                            value='Next'
-                        />
-                    )}
 
                 </div>
 

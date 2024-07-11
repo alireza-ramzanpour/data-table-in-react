@@ -449,6 +449,8 @@ form {
     cursor: pointer;
     margin-right: 4px;
     margin-left: 4px;
+    font-size: 12px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .activeButton {
@@ -461,8 +463,6 @@ form {
     background: #f9f9f9;
 }
 
-.button{
-    font-size: 12px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-
+.dotButton{
+    cursor: context-menu;
 }
