@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import { FaTrash } from "react-icons/fa6";
+import { FaEdit } from "react-icons/fa";
 import "../assets/css/style.css"
-
 
 function DataTable(props) {
 
@@ -9,11 +10,24 @@ function DataTable(props) {
     const [editingData, setEditingData] = useState([]);
     const fieldRefs = useRef([])
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const totalPages = Math.ceil(data.length / props.rowsPerPage);
+    const startIndex = (currentPage - 1) * props.rowsPerPage;
+    const endIndex = startIndex + props.rowsPerPage;
+    const currentData = data.slice(startIndex, endIndex);
+    const showPreviousButton = currentPage > 1;
+    const showNextButton = currentPage < totalPages;
+
+    const handlePageChange = (page) => {
+        if (page > 0 && page <= totalPages) {
+            setCurrentPage(page);
+        }
+    };
+
     useEffect(() => {
         setCols(props.cols)
         setData(props.data)
     }, [props])
-
 
     const handleEditingData = () => {
         const updatedData = data.map((item, i) => {
@@ -50,85 +64,127 @@ function DataTable(props) {
 
     return (
         <>
-            <table className={props.theme}>
-                <thead>
-                    <tr className="head-row">
+            <div className="table-holder">
+                <table className={props.theme}>
+                    <thead className="tableRowHeader">
+                        <tr className="head-row">
+                            {
+                                cols.map((col) => (
+                                    <th className="tableHeader">{col}</th>
+                                ))
+                            }
+                            <th className="tableHeader">peration</th>
+                            {/* {props.deleteButton && <th>peration</th>} */}
+                            {/* {props.editButton && <th>peration</th>} */}
+                        </tr>
+                    </thead>
+                    <tbody>
                         {
-                            cols.map((col) => (
-                                <th>{col}</th>
+                            currentData.map((d, index) => (
+                                <tr key={index} className="tableRowItems">
+                                    {
+                                        cols.map((col) => (
+                                            <td className="tableCell">{d[col]}</td>
+                                        ))
+                                    }
+                                    <td className="buttonWrapper">
+                                        {props.deleteButton &&
+                                            <FaTrash className="delete-btn icon" onClick={() => {
+                                                const newData = [...data.slice(0, index), ...data.slice(index + 1)];
+                                                setData(newData);
+                                            }} />
+                                        }
+                                        {
+                                            props.editButton &&
+                                            <FaEdit className="table-btn icon" onClick={() => openModal({ ...d, index })} />
+                                        }
+                                    </td>
+                                </tr>
                             ))
                         }
-                        {props.deleteButton && <th>Delete</th>}
-                        {props.editButton && <th>Edit</th>}
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.map((d, index) => (
-                            <tr key={index} className="content-row">
-                                {
-                                    cols.map((col) => (
-                                        <td>{d[col]}</td>
-                                    ))
-                                }
-                                {props.deleteButton &&
-                                    <td>
-                                        <input type="button" value='delete' className="delete-btn" onClick={() => {
-                                            const newData = [...data.slice(0, index), ...data.slice(index + 1)];
-                                            setData(newData);
-                                        }} />
-                                    </td>
-                                }
-                                {
-                                    props.editButton &&
-                                    <td>
-                                        <input type="button" className="table-btn" value="edit" onClick={() => openModal({ ...d, index })} />
-                                    </td>
-                                }
-                            </tr>
+                    </tbody>
+                </table>
+                <div className="tableFooter">
 
-                        ))
+                    {showPreviousButton && (
+                        <input
+                            type="button"
+                            className="button"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            value='Previous'
+                        />
+                    )}
 
-                    }
-                </tbody>
-            </table>
-            {modalIsOpen &&
-                <div className='modal'>
-                    <h2>Enter the field</h2>
-                    <form>
-                        {props.editField.map((field, index) => (
-                            editingData.map((item) => {
-                                if (item[field] == "Yes" || item[field] == "No") {
-                                    return (
-                                        <div >
-                                            <input
-                                                type="checkbox"
-                                                ref={(element) => fieldRefs.current[index] = element}
-                                                defaultChecked={item[field] == 'Yes' ? true : false}
-                                            />
-                                            <span>{field}</span>
-                                        </div>
-                                    )
-                                } else {
-                                    return (
-                                        <input
-                                            type="text"
-                                            ref={(element) => fieldRefs.current[index] = element}
-                                            className={field}
-                                            defaultValue={item[field]}
-                                        />
-                                    )
-                                }
-                            })
-                        ))}
-                        <div className="button-wrapper">
-                            <input type="button" className="custom-button ok-btn" value="Ok" onClick={handleEditingData} />
-                            <input type="button" className="custom-button cancel-btn" value="Cancel" onClick={closeModal} />
-                        </div>
-                    </form>
+                    {Array.from({ length: totalPages }, (_, index) => {
+                        const pageNumber = index + 1;
+                        if (
+                            pageNumber == 1 ||
+                            pageNumber == totalPages ||
+                            (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+                        ) {
+                            return (
+                                <button
+                                    key={index}
+                                    className={`button ${pageNumber == currentPage ? 'activeButton' : 'inactiveButton'}`}
+                                    onClick={() => handlePageChange(pageNumber)}
+                                >
+                                    {pageNumber}
+                                </button>
+                            );
+                        }
+                    })}
+
+                    {showNextButton && (
+                        <input
+                            type="button"
+                            className="button"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            value='Next'
+                        />
+                    )}
+
                 </div>
-            }
 
+                {modalIsOpen &&
+                    <div className='modal'>
+                        <div className="modal-background"></div>
+                        <div className="modal-content">
+                            <h2>Enter the field</h2>
+                            <form>
+                                {props.editField.map((field, index) => (
+                                    editingData.map((item) => {
+                                        if (item[field] == "Yes" || item[field] == "No") {
+                                            return (
+                                                <div >
+                                                    <input
+                                                        type="checkbox"
+                                                        ref={(element) => fieldRefs.current[index] = element}
+                                                        defaultChecked={item[field] == 'Yes' ? true : false}
+                                                    />
+                                                    <span>{field}</span>
+                                                </div>
+                                            )
+                                        } else {
+                                            return (
+                                                <input
+                                                    type="text"
+                                                    ref={(element) => fieldRefs.current[index] = element}
+                                                    className={field}
+                                                    defaultValue={item[field]}
+                                                />
+                                            )
+                                        }
+                                    })
+                                ))}
+                                <div className="button-wrapper">
+                                    <input type="button" className="custom-button ok-btn" value="Ok" onClick={handleEditingData} />
+                                    <input type="button" className="custom-button cancel-btn" value="Cancel" onClick={closeModal} />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
         </>
     )
 }

@@ -1,13 +1,12 @@
 import DataTable from "./components/DataTable";
-// import "./assets/css/style.css"
 
 function App() {
   return (
     <>
       <DataTable
-        theme="blue"
-        editButton = {true}
-        editField = {["name", "family", "retired"]}
+        theme="newStyle"
+        editButton={true}
+        editField={["name", "family", "retired"]}
         deleteButton={true}
         cols={["name", "family", "retired"]}
         data={[
@@ -16,8 +15,36 @@ function App() {
           { name: "mehdi", family: "hoseini", retired: 'Yes' },
           { name: "amin", family: "amiri", retired: 'Yes' },
           { name: "mehran", family: "kazemi", retired: 'No' },
-        ]} 
-        />
+          { name: "ramin", family: "kazemi", retired: 'Yes' },
+          { name: "javad", family: "saeidi", retired: 'No' },
+          { name: "hamid", family: "ahmadi", retired: 'No' },
+          { name: "ali", family: "rezaei", retired: 'Yes' },
+          { name: "reza", family: "alinia", retired: 'No' },
+          { name: "mehdi", family: "hoseini", retired: 'Yes' },
+          { name: "amin", family: "amiri", retired: 'Yes' },
+          { name: "mehran", family: "kazemi", retired: 'No' },
+          { name: "ramin", family: "kazemi", retired: 'Yes' },
+          { name: "javad", family: "saeidi", retired: 'No' },
+          { name: "hamid", family: "ahmadi", retired: 'No' },
+          { name: "ali", family: "rezaei", retired: 'Yes' },
+          { name: "reza", family: "alinia", retired: 'No' },
+          { name: "mehdi", family: "hoseini", retired: 'Yes' },
+          { name: "amin", family: "amiri", retired: 'Yes' },
+          { name: "mehran", family: "kazemi", retired: 'No' },
+          { name: "ramin", family: "kazemi", retired: 'Yes' },
+          { name: "javad", family: "saeidi", retired: 'No' },
+          { name: "hamid", family: "ahmadi", retired: 'No' },
+          { name: "ali", family: "rezaei", retired: 'Yes' },
+          { name: "reza", family: "alinia", retired: 'No' },
+          { name: "mehdi", family: "hoseini", retired: 'Yes' },
+          { name: "amin", family: "amiri", retired: 'Yes' },
+          { name: "mehran", family: "kazemi", retired: 'No' },
+          { name: "ramin", family: "mohammadi", retired: 'Yes' },
+          { name: "javad", family: "saeidi", retired: 'No' },
+          { name: "hamid", family: "ahmadi", retired: 'No' },
+        ]}
+        rowsPerPage={4}
+      />
 
 
     </>
