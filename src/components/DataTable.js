@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaTrash } from "react-icons/fa6";
 import { FaEdit } from "react-icons/fa";
-import "../assets/css/style.css"
+import "../assets/css/main-style.css"
+import "../assets/css/default-style.css"
+import "../assets/css/blue-style.css"
+import "../assets/css/red-style.css"
+import "../assets/css/green-style.css"
+import "../assets/css/modal-style.css"
 
 function DataTable(props) {
 
@@ -62,8 +67,8 @@ function DataTable(props) {
 
     return (
         <>
-            <div className="table-holder">
-                <table className={props.theme}>
+            <div className={`${props.theme} table-holder`}>
+                <table>
                     <thead className="tableRowHeader">
                         <tr className="head-row">
                             {
@@ -112,19 +117,19 @@ function DataTable(props) {
                             (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
                         ) {
                             return (
-                                <button
+                                <div
                                     className={`button ${pageNumber == currentPage ? 'activeButton' : 'inactiveButton'}`}
                                     onClick={() => handlePageChange(pageNumber)}
                                 >
                                     {pageNumber}
-                                </button>
+                                </div>
                             )
                         } else if (
                             pageNumber == 2 ||
                             pageNumber == totalPages - 1
                         ) {
                             return (
-                                <button className="button dotButton">...</button>
+                                <div className="dotButton">...</div>
                             )
                         }
                     })}

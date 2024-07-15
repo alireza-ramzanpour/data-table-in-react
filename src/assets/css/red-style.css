@@ -1,0 +1,58 @@
+.red .head-row {
+    color: #ffffff;
+    background-color: #f00;
+}
+
+.red tbody tr:nth-of-type(even) {
+    background-color: #ffe6e6;
+}
+
+.red tbody tr:nth-of-type(odd) {
+    background-color: #ffb3b3;
+}
+
+.red tbody tr:last-of-type {
+    border-bottom: 2px solid #d00000;
+}
+
+.red .delete-btn:hover {
+    color: #d00000;
+    transition: all 300ms ease;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+}
+
+.red .table-btn:hover {
+    color: #ffa500;
+    transition: all 300ms ease;
+    -webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -ms-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+}
+
+.red .tableFooter {
+    background-color: #f00;
+}
+
+.red .activeButton {
+    color: white;
+    background: #d00000;
+}
+
+.red .inactiveButton {
+    color: #000;
+    background: #f9f9f9;
+}
+
+.red .inactiveButton:hover {
+    background-color: #f4d58d;
+    color: #fff;
+}
+
+.red .dotButton {
+    margin: 0 5px;
+    color: #fff;
+}

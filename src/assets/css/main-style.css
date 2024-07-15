@@ -1,0 +1,85 @@
+.table-holder {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+table {
+    border-collapse: collapse;
+    border: none;
+    font-size: 16px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    width: 100%;
+    margin-top: 20vh;
+    /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); */
+}
+
+table thead tr {
+    /* text-align: left; */
+    text-transform: uppercase;
+    /* border-bottom: 1px solid #dddddd; */
+}
+
+table tbody tr {
+    text-transform: capitalize;
+    /* text-align: left; */
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+
+.table-btn,
+.delete-btn {
+    font-size: 1rem;
+    margin: 0 2px;
+}
+
+table input {
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    margin: 4px 0;
+    cursor: pointer;
+    padding: 10px 10px;
+    width: 120px;
+    height: 40px;
+    border-radius: 5px;
+}
+
+
+
+.tableFooter {
+    background-color: #f1f1f1;
+    padding: 8px 0px;
+    width: 100%;
+    font-weight: 500;
+    text-align: left;
+    font-size: 16px;
+    color: #2c3e50;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.button {
+    border: none;
+    padding: 7px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 4px;
+    margin-left: 4px;
+    font-size: 12px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+
